@@ -37,7 +37,7 @@ public enum NumberPadEnum: Int {
         (0 ... 9).contains(rawValue)
     }
 
-    var toString: String {
+    public var toString: String {
         "\(rawValue)"
     }
 

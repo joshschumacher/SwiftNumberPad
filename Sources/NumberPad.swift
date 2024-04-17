@@ -115,21 +115,25 @@ public struct NumberPad<T>: View
 
     private func digitAction(_ digit: NumberPadEnum) {
         let result = config.digitAction(digit)
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
         onEntry(digit, result)
     }
 
     private func clearAction() {
         config.clearAction()
+        UINotificationFeedbackGenerator().notificationOccurred(.success)
         onEntry(.clear, true)
     }
 
     private func decimalPointAction() {
         let result = config.decimalPointAction()
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
         onEntry(.decimalPoint, result)
     }
 
     private func backspaceAction() {
         config.backspaceAction()
+        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         onEntry(.backspace, true)
     }
 }

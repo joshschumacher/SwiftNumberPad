@@ -29,6 +29,7 @@ open class NPBaseConfig<T>: ObservableObject
         self.sValue = sValue
         self.upperBound = upperBound
         self.formatter = formatter
+        self.isDefault = true
     }
 
     // MARK: - Public Properties
@@ -38,6 +39,8 @@ open class NPBaseConfig<T>: ObservableObject
     public var stringValue: String {
         sValue
     }
+    
+    public var isDefault: Bool = true
 
     public var value: T? {
         toValue(sValue)
@@ -50,6 +53,7 @@ open class NPBaseConfig<T>: ObservableObject
     // MARK: - Actions
 
     public func clearAction() {
+        isDefault = true
         sValue = "0"
     }
 
@@ -65,6 +69,7 @@ open class NPBaseConfig<T>: ObservableObject
         guard digit.isDigit else { return false }
         let strNum = digit.toString
         if isClear {
+            isDefault = false
             sValue = strNum
         } else {
             guard validateDigit(digit) else { return false }
@@ -73,7 +78,7 @@ open class NPBaseConfig<T>: ObservableObject
 
             guard let nuDValue = toValue(nuValue),
                   nuDValue <= upperBound else { return false }
-
+            isDefault = false
             sValue = nuValue
         }
 
