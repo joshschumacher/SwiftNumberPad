@@ -86,7 +86,6 @@ public struct NumberPad<T>: View
     private var backspace: some View {
         Button(action: {}) {
             Image(systemName: "delete.backward.fill")
-                .imageScale(.large)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .disabled(config.isClear)

@@ -30,6 +30,7 @@ open class NPBaseConfig<T>: ObservableObject
         self.upperBound = upperBound
         self.formatter = formatter
         self.isDefault = true
+        self.isAcceptingInput = true
     }
 
     // MARK: - Public Properties
@@ -41,6 +42,10 @@ open class NPBaseConfig<T>: ObservableObject
     }
     
     public var isDefault: Bool = true
+    
+    // Allows for locking input temporarily.
+    // When set to false, the buttons aren't "disabled" but all button input is ignored
+    public var isAcceptingInput: Bool = true
 
     public var value: T? {
         toValue(sValue)
@@ -53,11 +58,19 @@ open class NPBaseConfig<T>: ObservableObject
     // MARK: - Actions
 
     public func clearAction() {
+        if (!isAcceptingInput) {
+            return;
+        }
+        
         isDefault = true
         sValue = "0"
     }
 
     public func backspaceAction() {
+        if (!isAcceptingInput) {
+            return;
+        }
+        
         if sValue.count <= 1 {
             clearAction()
         } else {
@@ -66,6 +79,10 @@ open class NPBaseConfig<T>: ObservableObject
     }
 
     public func digitAction(_ digit: NumberPadEnum) -> Bool {
+        if (!isAcceptingInput) {
+            return false;
+        }
+        
         guard digit.isDigit else { return false }
         let strNum = digit.toString
         if isClear {
